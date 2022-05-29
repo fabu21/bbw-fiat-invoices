@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TypePad from './components/TypePad'
+import SetReceiver from './components/SetReceiver'
+import { Layout } from 'antd'
+import { useParams } from 'react-router-dom'
+const { Header, Footer, Content } = Layout;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    let { userName } = useParams()
+
+    return (
+        <>
+            <Layout>
+                <Header><img src={require('./assets/Lago_Bitcoin_logo.jpg')} alt="Logo" className='logo'></img></Header>
+                <Content>
+                    {!userName ?
+                        <SetReceiver />
+                        :
+                        <TypePad />
+                    }
+                </Content>
+                <Footer>Powered by <a href="http://bitcoinlake.io/">bitcoinlake.io</a></Footer>
+            </Layout>
+        </>
+    );
 }
 
 export default App;
