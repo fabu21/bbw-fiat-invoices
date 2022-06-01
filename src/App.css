@@ -4,6 +4,10 @@
     margin-top: 20px;
 }
 
+.invoice__header {
+    font-size: x-large;
+}
+
 .ant-input-number-input {
     text-align: right;
 }

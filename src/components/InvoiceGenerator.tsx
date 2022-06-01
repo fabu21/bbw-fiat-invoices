@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   gql, useMutation
 } from "@apollo/client"
@@ -37,18 +37,13 @@ type LnInvoiceObject = {
 
 export function InvoiceGenerator(props: InvoiceGeneratorProbs) {
 
-  const [invoiceStatus, setInvoiceStatus] = useState<
-    "loading" | "new" | "need-update" | "expired" | "paid"
-  >("loading")
-
   const [createInvoice, { loading, error, data }] = useMutation<{
     mutationData: {
       errors: OperationError[]
       invoice?: LnInvoiceObject
     }
   }>(LN_INVOICE_CREATE_ON_BEHALF_OF_RECIPIENT, {
-    onError: console.error,
-    onCompleted: () => setInvoiceStatus("new"),
+    onError: console.error
   })
 
   useEffect(() => {
@@ -80,34 +75,17 @@ export function InvoiceGenerator(props: InvoiceGeneratorProbs) {
   }
 
   if (loading) {
-    return <Spin size="large" />
+    return <>
+      <div>
+        <Spin size="large" />
+      </div>
+    </>
   }
 
   if (!invoice) return null
-
-  // if (invoiceStatus === "expired") {
-  //   return (
-  //     <div className="warning expired-invoice">
-  //       Invoice Expired...{" "}
-  //       <span className="clickable" onClick={regenerate}>
-  //         Generate New Invoice
-  //       </span>
-  //     </div>
-  //   )
-  // }
-
   return (
     <>
-      {/* {invoiceStatus === "need-update" && (
-        <div className="warning">
-          Stale Price...{" "}
-          { <span className="clickable" onClick={regenerate}>
-            Regenerate Invoice
-          </span> 
-        </div>
-      )} */}
-
-        <Invoice paymentRequest={invoice} onPaymentSuccess={() => setInvoiceStatus("paid")}/>
+      <Invoice paymentRequest={invoice} />
     </>
   )
 }

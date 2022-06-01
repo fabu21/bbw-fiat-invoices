@@ -2,7 +2,7 @@
   "name": "bbw-fiat-invoices",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/paypoc/",
+  "homepage": ".",
   "dependencies": {
     "@apollo/client": "^3.6.5",
     "@bitcoin-design/bitcoin-icons-react": "^0.1.9",

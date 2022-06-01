@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CaretLeftIcon } from '@bitcoin-design/bitcoin-icons-react/filled'
-import { Button, Row, Col, InputNumber, Modal } from 'antd';
+import { Button, Row, Col, InputNumber, Modal, Alert } from 'antd';
 import { getSatsAmount } from '../lib/GetSatsAmount'
 import { TypePadButton } from './TypePadButton';
 import GetDefaultWallet from "../lib/DefaultBitcoinBeachWallet"
@@ -10,8 +10,9 @@ import { useParams } from 'react-router-dom'
 export default function TypePad() {
     let { userName } = useParams()
     const [fiatValue, setFiatValue] = useState<string>('')
-    const [fiat, setFiat] = useState<string>('GTQ')
+    const [fiat] = useState<string>('GTQ')
     const [defaultUserWallet, setDefaultUserWallet] = useState<string>('')
+    const [userNotFound, setuserNotFound] = useState<boolean>(false)
     const [satsAmount, setSatsAmount] = useState<number>(0)
     const [loadingSatsAmount, setLoadingSatsAmount] = useState<boolean>(false)
 
@@ -26,15 +27,20 @@ export default function TypePad() {
     const getSatsAmountAndLoadToInvoice = () => {
         setLoadingSatsAmount(true)
         getSatsAmount(fiatValue, fiat, function (sats: number) {
-            console.log(sats)
             setSatsAmount(sats)
             setLoadingSatsAmount(false)
         })
     }
 
+    const redirectToUsernameSelection = () => {
+        window.location.href = '/'
+    }
+
     useEffect(() => {
         if (userName)
-            GetDefaultWallet(userName).then(result => setDefaultUserWallet(result))
+            GetDefaultWallet(userName)
+                .then(result => setDefaultUserWallet(result))
+                .catch(result => setuserNotFound(true))
     }, [userName]);
 
     return (
@@ -62,7 +68,7 @@ export default function TypePad() {
                 <Row>
                     <Col span={7}><TypePadButton value='.' onClickCallback={addToFiatValue}></TypePadButton></Col>
                     <Col span={7}><TypePadButton value='0' onClickCallback={addToFiatValue}></TypePadButton></Col>
-                    <Col span={7}><Button type='default' size='large' onClick={() => removeFromFiatValue()}> DEL </Button></Col>
+                    <Col span={7}><Button type='default' size='large' onClick={() => removeFromFiatValue()}> <CaretLeftIcon height={50}></CaretLeftIcon></Button></Col>
                 </Row>
                 <Row>
                     <Col span={21}>
@@ -71,11 +77,21 @@ export default function TypePad() {
                 </Row>
             </div>
             <Modal visible={satsAmount > 0} onOk={() => setSatsAmount(0)} onCancel={() => setSatsAmount(0)} destroyOnClose={true} width={340}>
-                <div>
-                    {fiat} {fiatValue}<br></br>
-                    {satsAmount} sats
+                <div className='invoice'>
+                    <div className='invoice__header'>
+                        <Row>
+                            <Col>{fiat}</Col>
+                            <Col offset={1}>{fiatValue}</Col>
+                            <Col offset={1}>|</Col>
+                            <Col offset={1}>{satsAmount}</Col>
+                            <Col offset={1}>sats</Col>
+                        </Row>
+                    </div>
                     <InvoiceGenerator sats={satsAmount} walletId={defaultUserWallet} onPaymentSuccess={() => setSatsAmount(0)}></InvoiceGenerator>
                 </div>
+            </Modal>
+            <Modal visible={userNotFound} onOk={redirectToUsernameSelection} onCancel={redirectToUsernameSelection} destroyOnClose={true} width={340}>
+                <Alert message={`No se ha podido encontrar al usuario ${userName}`} type='error'></Alert>
             </Modal>
         </>
     );

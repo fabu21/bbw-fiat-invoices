@@ -6,13 +6,14 @@ import {
 } from "@apollo/client"
 import { WebSocketLink } from "@apollo/client/link/ws"
 import { getMainDefinition } from "@apollo/client/utilities"
+import {API_URL} from './Config'
 
 const httpLink = new HttpLink({
-  uri: 'https://api.mainnet.galoy.io/graphql',
+  uri: `https://${API_URL}`,
 })
 
 const wsLink = new WebSocketLink({
-  uri: 'wss://api.mainnet.galoy.io/graphql',
+  uri: `wss://${API_URL}`,
   options: {
     reconnect: true,
   },
