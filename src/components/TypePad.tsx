@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { CaretLeftIcon } from '@bitcoin-design/bitcoin-icons-react/filled'
-import { Button, Row, Col, InputNumber, Modal, Alert } from 'antd';
+import { Button, Row, Col, InputNumber, Modal, Alert, Select } from 'antd';
 import { getSatsAmount } from '../lib/GetSatsAmount'
 import { TypePadButton } from './TypePadButton';
 import GetDefaultWallet from "../lib/DefaultBitcoinBeachWallet"
 import { InvoiceGenerator } from './InvoiceGenerator';
 import { useParams } from 'react-router-dom'
+import { AVAILABLE_CURRENCIES } from '../lib/Config';
+
 
 export default function TypePad() {
     let { userName } = useParams()
+
     const [fiatValue, setFiatValue] = useState<string>('')
-    const [fiat] = useState<string>('GTQ')
+    const [fiat, setFiat] = useState<string>('GTQ')
     const [defaultUserWallet, setDefaultUserWallet] = useState<string>('')
     const [userNotFound, setuserNotFound] = useState<boolean>(false)
     const [satsAmount, setSatsAmount] = useState<number>(0)
@@ -36,6 +39,11 @@ export default function TypePad() {
         window.location.href = '/'
     }
 
+    const availableCurrencies = (
+        <Select defaultValue={fiat} options={AVAILABLE_CURRENCIES} onChange={(e) => setFiat(e)}>
+        </Select>
+    )
+
     useEffect(() => {
         if (userName)
             GetDefaultWallet(userName)
@@ -47,7 +55,7 @@ export default function TypePad() {
         <>
             <div className='typePad'>
                 <Row>
-                    <Col span={21}><InputNumber addonBefore={fiat} value={fiatValue} size='large'></InputNumber>
+                    <Col span={21}><InputNumber addonBefore={availableCurrencies} value={fiatValue} size='large'></InputNumber>
                     </Col>
                 </Row>
                 <Row>
