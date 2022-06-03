@@ -33,3 +33,4 @@ jobs:
         server: ${{ secrets.lago_bitcoin_ftp_server }}
         username: ${{ secrets.lago_bitcoin_ftp_username }}
         password: ${{ secrets.lago_bitcoin_ftp_password }}
+        local-dir: ./build/
