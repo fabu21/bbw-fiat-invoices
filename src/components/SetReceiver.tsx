@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Input, Row, Col, Space } from 'antd'
+import { Button, Input, Row, Col } from 'antd'
 import { useNavigate } from "react-router-dom";
 
 export default function SetReceiver() {
