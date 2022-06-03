@@ -19,7 +19,7 @@ root.render(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="paypoc" element={<App />}>
+          <Route path="/" element={<App />}>
             <Route path=":userName" element={<TypePad />} />
           </Route>
         </Routes>
