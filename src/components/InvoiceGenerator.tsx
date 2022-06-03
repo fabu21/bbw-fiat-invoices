@@ -61,7 +61,6 @@ export function InvoiceGenerator(props: InvoiceGeneratorProbs) {
   let invoice
 
   if (data) {
-    console.log(data)
     const invoiceData = data.mutationData
     if (invoiceData.errors?.length > 0) {
       errorString = invoiceData.errors.map((e) => e.message).join(", ")
