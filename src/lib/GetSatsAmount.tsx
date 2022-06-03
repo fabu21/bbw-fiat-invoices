@@ -10,8 +10,6 @@ export function getSatsAmount(amount: string, currency: string, callback: SatsAm
     axios
         .get(`https://api.yadio.io/convert/${amount}/${currency}/BTC`, undefined)
         .then((response: any) => {
-            console.log(response.data)
-
             if (response.data?.rate) {
                 sats = Math.round(response.data.result * 100000000)
 
