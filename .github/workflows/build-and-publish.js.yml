@@ -27,3 +27,9 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+    - name: Web Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ${{ secrets.lago_bitcoin_ftp_server }}
+        username: ${{ secrets.lago_bitcoin_ftp_username }}
+        password: ${{ secrets.lago_bitcoin_ftp_password }}
