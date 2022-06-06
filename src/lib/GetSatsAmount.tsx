@@ -1,4 +1,5 @@
 import axios from "axios"
+import { API_YADIO_URL } from './Config'
 
 interface SatsAmountSuccessCallback {
     (satsAmount: number): void;
@@ -8,7 +9,7 @@ export function getSatsAmount(amount: string, currency: string, callback: SatsAm
     let sats: number = 0
 
     axios
-        .get(`https://api.yadio.io/convert/${amount}/${currency}/BTC`, undefined)
+        .get(`${API_YADIO_URL}convert/${amount}/${currency}/BTC`, undefined)
         .then((response: any) => {
             if (response.data?.rate) {
                 sats = Math.round(response.data.result * 100000000)

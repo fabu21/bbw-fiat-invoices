@@ -6,8 +6,9 @@ import { TypePadButton } from './TypePadButton';
 import GetDefaultWallet from "../lib/DefaultBitcoinBeachWallet"
 import { InvoiceGenerator } from './InvoiceGenerator';
 import { useParams } from 'react-router-dom'
-import { AVAILABLE_CURRENCIES } from '../lib/Config';
-
+import { getAvailableCurrencies, AvailableCurrency } from '../lib/AvailableCurrencies';
+import {getCurrentLocationsCurrency} from '../lib/CurrentLocationsCurrency'
+import {YADIO_IMAGE_URL} from '../lib/Config'
 
 export default function TypePad() {
     let { userName } = useParams()
@@ -18,6 +19,7 @@ export default function TypePad() {
     const [userNotFound, setuserNotFound] = useState<boolean>(false)
     const [satsAmount, setSatsAmount] = useState<number>(0)
     const [loadingSatsAmount, setLoadingSatsAmount] = useState<boolean>(false)
+    const [allAvailableCurrencies, setallAvailableCurrencies] = useState<AvailableCurrency[]>()
 
     const addToFiatValue = (amount: string) => {
         setFiatValue(fiatValue + amount.toString())
@@ -40,7 +42,7 @@ export default function TypePad() {
     }
 
     const availableCurrencies = (
-        <Select defaultValue={fiat} options={AVAILABLE_CURRENCIES} onChange={(e) => setFiat(e)}>
+        <Select defaultValue={fiat} value={fiat} disabled={allAvailableCurrencies == null} options={allAvailableCurrencies} onChange={(e) => setFiat(e)}>
         </Select>
     )
 
@@ -49,13 +51,20 @@ export default function TypePad() {
             GetDefaultWallet(userName)
                 .then(result => setDefaultUserWallet(result))
                 .catch(result => setuserNotFound(true))
-    }, [userName]);
+
+        if (!allAvailableCurrencies) {
+            getAvailableCurrencies((result) => setallAvailableCurrencies(result))
+            getCurrentLocationsCurrency((result) => setFiat(result))
+        }
+
+
+    }, [userName,allAvailableCurrencies]);
 
     return (
         <>
             <div className='typePad'>
                 <Row>
-                    <Col span={21}><InputNumber addonBefore={availableCurrencies} value={fiatValue} size='large'></InputNumber>
+                    <Col span={21}><InputNumber addonBefore={availableCurrencies} value={fiatValue} size='large' addonAfter={<img src={`${YADIO_IMAGE_URL}${fiat}.png`} alt={fiat} height="30px"></img>}></InputNumber>
                     </Col>
                 </Row>
                 <Row>
