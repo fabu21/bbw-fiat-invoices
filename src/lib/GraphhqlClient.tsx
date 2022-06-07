@@ -15,7 +15,7 @@ const httpLink = new HttpLink({
 const wsLink = new WebSocketLink({
   uri: `wss://${API_URL}`,
   options: {
-    reconnect: false,
+    reconnect: true,
   },
 })
 
