@@ -21,7 +21,7 @@ function App() {
                         <TypePad />
                     }
                 </Content>
-                <Footer>Powered by <a href="http://bitcoinlake.io/" target="_blank">bitcoinlake.io</a> <a href="https://github.com/fabu21/bbw-fiat-invoices" target="_blank"><GithubOutlined /></a></Footer>
+                <Footer>Powered by <a href="http://bitcoinlake.io/" target="_blank" rel="noreferrer">bitcoinlake.io</a> <a href="https://github.com/fabu21/bbw-fiat-invoices" rel="noreferrer" target="_blank"><GithubOutlined /></a></Footer>
             </Layout>
         </>
     );
