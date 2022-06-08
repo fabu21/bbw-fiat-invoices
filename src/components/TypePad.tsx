@@ -64,7 +64,7 @@ export default function TypePad() {
         <>
             <div className='typePad'>
                 <Row>
-                    <Col span={21}><InputNumber addonBefore={availableCurrencies} value={fiatValue} size='large' addonAfter={<img src={`${YADIO_IMAGE_URL}${fiat}.png`} alt={fiat} height="30px"></img>}></InputNumber>
+                    <Col span={21}><InputNumber addonBefore={availableCurrencies} value={fiatValue} onChange={(value) => setFiatValue(value)} size='large' addonAfter={<img src={`${YADIO_IMAGE_URL}${fiat}.png`} alt={fiat} height="30px"></img>}></InputNumber>
                     </Col>
                 </Row>
                 <Row>
