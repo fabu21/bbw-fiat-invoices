@@ -3,6 +3,7 @@ import './App.css';
 import TypePad from './components/TypePad'
 import SetReceiver from './components/SetReceiver'
 import { Layout } from 'antd'
+import { GithubOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
 const { Header, Footer, Content } = Layout;
 
@@ -20,7 +21,7 @@ function App() {
                         <TypePad />
                     }
                 </Content>
-                <Footer>Powered by <a href="http://bitcoinlake.io/">bitcoinlake.io</a></Footer>
+                <Footer>Powered by <a href="http://bitcoinlake.io/" target="_blank" rel="noreferrer">bitcoinlake.io</a> <a href="https://github.com/fabu21/bbw-fiat-invoices" rel="noreferrer" target="_blank"><GithubOutlined /></a></Footer>
             </Layout>
         </>
     );
