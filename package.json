@@ -4,6 +4,7 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@apollo/client": "^3.6.5",
     "@bitcoin-design/bitcoin-icons-react": "^0.1.9",
     "@testing-library/jest-dom": "^5.16.4",
